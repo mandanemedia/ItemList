@@ -1,4 +1,4 @@
-# Setup Express and React to fitch data from Giphy
+# Setup Express and React to fetch data from Giphy
 
 ## install packages
 
