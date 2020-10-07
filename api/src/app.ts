@@ -1,0 +1,27 @@
+import express from 'express';
+import cors from 'cors';
+// import swaggerUi from 'swagger-ui-express';
+import Router from './router';
+// import swaggerDocument from './swagger.json';
+
+class App {
+  public httpServer: any
+
+  constructor() {
+      this.httpServer = express();
+      this.httpServer.use(cors());
+      new Router(this.httpServer);
+  }
+
+  public Start = (port: number) => new Promise((resolve, reject) => {
+      this.httpServer.listen(
+          port,
+          () => {
+              resolve(port);
+          },
+      )
+          .on('error', (err: object) => reject(err));
+  })
+}
+
+export default App;

@@ -1,0 +1,21 @@
+.GiphyYears {
+  max-width: 1200;
+  border: 1px solid rgba(128, 124, 124, 0.1);
+}
+
+.searchBox{
+  border: #ccc 1px solid;
+  width: 260px;
+  padding: 3px;
+  margin: 5px 0px;
+}
+
+.imageItem {
+  position: left;
+  padding: 5px;
+}
+ 
+h3 {
+  margin: 5px;
+  color: gray;
+}
