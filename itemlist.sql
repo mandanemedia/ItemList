@@ -16,6 +16,7 @@ CREATE TABLE "public"."item" (
 ;
 ALTER TABLE "public"."item" OWNER TO "postgres";
 ALTER TABLE "public"."item" ADD CONSTRAINT "item_pkey" PRIMARY KEY ("itemId");
+ALTER TABLE "public"."item" ADD CONSTRAINT "item_listId_order_key" UNIQUE ("listId", "order");
 ALTER TABLE "public"."item" ADD CONSTRAINT "item_listId_fkey" FOREIGN KEY ("listId") REFERENCES "public"."list" ("listId") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 BEGIN;

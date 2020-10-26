@@ -1,7 +1,8 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import handleError from './utils/handleError';
-import GiphyRoutes from './routes/GiphyRoutes';
+import ListsRoutes from './routes/ListsRoutes';
+import ItemsRoutes from './routes/ItemsRoutes';
 
 class Router {
     constructor(server: express.Express) {
@@ -9,8 +10,11 @@ class Router {
         server.use(bodyParser.urlencoded({ extended: true }));
         server.use(bodyParser.json());
 
-        const giphyRoutes = new GiphyRoutes();
-        server.use('/giphy', giphyRoutes.router);
+        const listsRoutes = new ListsRoutes();
+        server.use('/lists', listsRoutes.router);
+
+        const itemsRoutes = new ItemsRoutes();
+        server.use('/items', itemsRoutes.router);
 
         server.use((err, req, res,
             next) => {

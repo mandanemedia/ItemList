@@ -17,7 +17,19 @@
 - List has id 
 - Item has description, order and id
 
-## install packages
+# Install and start postgress
+```
+brew install postgresql
+brew services start postgresql
+```
+Set user name and DB name for Postgress on config/db.ts
+
+```
+postgres=# \du
+```
+Then, create a database and import itemlist.sql into the new database.
+
+## Install packages
 
 ```
 cd api
@@ -35,11 +47,21 @@ npm install
 cd api
 npm run dev
 ```
+Then visit http://localhost:3000/swagger/#
 
 ```
 cd client
 npm start
 ```
 
-# React Screen Shot 
-![React](screenshot.png)
+# Screen Shots 
+![DB Schema](DBSchema_.png)
+![Swagger](Swagger_.png)
+
+
+
+# Todo
+- Add React piece
+- Add Better error handeling for BE i.e. if cannot set non unique order in DB 
+- Add unit test for Backend 
+- Add unit test for frontend

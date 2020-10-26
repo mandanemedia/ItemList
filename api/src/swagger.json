@@ -1,0 +1,528 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "List Item Service",
+        "description": "This service to edit list via a REST API. A CRUD style API in NodeJs using TypeScript",
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        }
+    },
+    "servers": [
+        {
+            "url": "/",
+            "description": "Local Dev"
+        }
+    ],
+    "tags": [
+        {
+            "name": "Items",
+            "description": "API for Items"
+        },
+        {
+            "name": "Lists",
+            "description": "API for List"
+        }
+    ],
+    "paths": {
+        "/items": {
+            "get": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Get all Items in system, can filter by List id",
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "listId",
+                        "description": "List with id",
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        },
+                        "example": "1000ef5c-1657-46b2-bb36-c74080e00a11"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Items"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Create a new Item",
+                "requestBody": {
+                    "description": "Item Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Item"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ItemFull"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/items/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID that we want to match",
+                    "schema": {
+                        "type" : "string"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Items"
+                ],
+                "summary": "Get Item by a given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Item with id",
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        },
+                        "example": "4621f692-0da5-45c6-9b28-68c15689e87f"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ItemFull"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Not found."
+                    }
+                }
+            },
+            "put": {
+                "summary": "Update Item with given ID",
+                "tags": [
+                    "Items"
+                ],
+                "requestBody": {
+                    "description": "Item Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/Item"
+                            }
+                        }
+                    }
+                },
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Item with new values",
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        },
+                        "example": "6e6de3b7-fcda-4b0e-8fd4-53eee2c34e99"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ItemFull"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    },
+                    "404": {
+                        "description": "Failed. Not found."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete Item with given ID",
+                "tags": [
+                    "Items"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Delete Item with id",
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        },
+                        "example": "6e6de3b7-fcda-4b0e-8fd4-53eee2c34e99"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/id"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Not found."
+                    }
+                }
+            }
+        },
+        "/items/{id}/order/{order}":{
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID that we want to match",
+                    "schema": {
+                        "type" : "string"
+                    }
+                },
+                {
+                    "name": "order",
+                    "in": "path",
+                    "required": true,
+                    "description": "order that we want to match",
+                    "schema": {
+                        "type" : "string"
+                    }
+                }
+            ],
+            "put": {
+                "summary": "Update Item's order with a given item id and order",
+                "tags": [
+                    "Items"
+                ],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "required": true,
+                        "description": "Item Id that we want to match",
+                        "schema": {
+                            "type" : "string"
+                        },
+                        "example": "4621f692-0da5-45c6-9b28-68c15689e87f"
+                    },
+                    {
+                        "name": "order",
+                        "in": "path",
+                        "required": true,
+                        "description": "the new order to be set",
+                        "schema": {
+                            "type" : "string"
+                        },
+                        "example": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ItemFull"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    },
+                    "404": {
+                        "description": "Failed. Not found."
+                    }
+                }
+            }
+        },
+        "/items/list/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID to match with the list",
+                    "schema": {
+                        "type" : "string"
+                    }
+                }
+            ],
+            "delete": {
+                "summary": "Delete all Items with a given List ID (or reset list by List ID)",
+                "tags": [
+                    "Items"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Delete Item with id",
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        },
+                        "example": "6e6de3b7-fcda-4b0e-8fd4-53eee2c34e99"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/id"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Not found."
+                    }
+                }
+            }
+        },
+        "/lists": {
+            "get": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Get all Lists in system",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Lists"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Create a new List",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListFull"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Failed. Bad post data."
+                    }
+                }
+            }
+        },
+        "/lists/{id}": {
+            "parameters": [
+                {
+                    "name": "id",
+                    "in": "path",
+                    "required": true,
+                    "description": "ID of the List that we want to match",
+                    "schema": {
+                        "type" : "string"
+                    }
+                }
+            ],
+            "get": {
+                "tags": [
+                    "Lists"
+                ],
+                "summary": "Get List with a given ID",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "List with id",
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        },
+                        "example": "29ccdff9-4ae5-46d9-a613-ca14c80558fc"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListFull"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Not found."
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete List with a given ID",
+                "tags": [
+                    "Lists"
+                ],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "required": true,
+                        "description": "Delete List with a given id",
+                        "schema": {
+                            "$ref": "#/components/schemas/id"
+                        },
+                        "example": "6e6de3b7-fcda-4b0e-8fd4-53eee2c34e99"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/id"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Failed. Not found."
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "id": {
+                "properties": {
+                    "uuid": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "id": "e6b61600-1afe-4d0d-9ff9-e9a2d3caed01"
+                }
+            },
+            "Item": {
+                "type": "object",
+                "properties": {
+                    "listId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "listId": "1000ef5c-1657-46b2-bb36-c74080e00a11",
+                    "description": "Apple"
+                }
+            },
+            "ItemFull": {
+                "type": "object",
+                "properties": {
+                    "itemId": {
+                        "type": "string"
+                    },
+                    "listId": {
+                        "type": "string"
+                    },
+                    "description": {
+                        "type": "string"
+                    },
+                    "order": {
+                        "type": "number"
+                    }
+                },
+                "example": {
+                    "itemId": "e6b61600-1afe-4d0d-9ff9-e9a2d3caed01",
+                    "listId": "1000ef5c-1657-46b2-bb36-c74080e00a11",
+                    "description": "Apple",
+                    "order": 1
+                }
+            },
+            "Items": {
+                "type": "array",
+                "items": {
+                    "$ref":  "#/components/schemas/ItemFull"
+                }
+            },
+            "ListFull": {
+                "type": "object",
+                "properties": {
+                    "listId": {
+                        "type": "string"
+                    }
+                },
+                "example": {
+                    "listId": "e6b61600-1afe-4d0d-9ff9-e9a2d3caed01",
+                }
+            },
+            "Lists": {
+                "type": "array",
+                "items": {
+                    "$ref":  "#/components/schemas/ListFull"
+                }
+            }
+        }
+    }
+}
