@@ -47,7 +47,7 @@ npm install
 cd api
 npm run dev
 ```
-Then visit http://localhost:3000/swagger/#
+Then visit http://localhost:9000/swagger/#/ and http://localhost:3000/
 
 ```
 cd client
