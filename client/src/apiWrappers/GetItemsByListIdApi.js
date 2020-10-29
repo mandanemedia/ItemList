@@ -4,7 +4,7 @@ const GetItemsByListIdApi = async (id:string) => {
   try {
     const response = await fetch(`${url}?listId=${id.trim()}`);
     const newData = await response.json();
-    console.log(newData);
+    // console.log(newData);
     return newData;
   }
   catch (e) {

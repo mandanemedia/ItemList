@@ -61,7 +61,11 @@ npm start
 
 
 # Todo
-- Add React piece
+- prompt user that a new list is created
+- Added item should immediately appear in list with a pending mark. The mark should dissapear as soon as server confirms successful add
+- There should be a retry on failed saves
+- Server should respond with proper error messages when there is an issue
+- Written in Typescript and share type definitions between backend and frontend
 - Add Better error handeling for BE i.e. if cannot set non unique order in DB 
 - Add unit test for Backend 
 - Add unit test for frontend

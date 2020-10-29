@@ -353,6 +353,17 @@
                     "Lists"
                 ],
                 "summary": "Create a new List",
+                "requestBody": {
+                    "description": "List Object",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/ListFull"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "OK",

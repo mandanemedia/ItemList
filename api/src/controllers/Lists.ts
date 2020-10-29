@@ -1,5 +1,4 @@
 import { Request, Response } from 'express';
-import { v4 as uuid } from 'uuid';
 import { HttpStatusCode } from '../models/types';
 import BaseError from '../utils/BaseError';
 import ListsModel from '../models/ListsModel';
@@ -19,7 +18,7 @@ class Items {
     }
 
     static async create(req: Request, res: Response) {
-        const listId = uuid();
+        const { listId } = req.body;
         const customer = await ListsModel.create(listId);
         return res.json(customer);
     }

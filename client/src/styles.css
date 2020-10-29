@@ -45,6 +45,9 @@
   resize: none;
   float: left;
 }
+.description:focus {
+  outline-color: lightblue;
+}
 .editItemButtonLeft{
   border: none;
   background: white;
@@ -79,4 +82,8 @@
 }
 .resetList{
   margin-left: 305px;
+}
+.defualt{
+  color: #666;
+  font-size: small;
 }

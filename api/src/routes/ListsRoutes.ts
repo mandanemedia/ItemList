@@ -35,6 +35,13 @@ class ItemsRoutes {
         // create
         this.router.post('/', async (req, res, next) => {
             try {
+                const addSchema = Joi.object().required().keys({
+                    listId: Joi.string().guid().required(),
+                });
+                const validate = addSchema.validate(req.body);
+                if (validate.error) {
+                    throw validate.error;
+                }
                 await lists.create(req, res);
             } catch (err) {
                 next(err);

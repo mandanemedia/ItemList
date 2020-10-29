@@ -11,12 +11,16 @@
     "@testing-library/react-hooks": "^3.4.1",
     "enzyme-to-json": "^3.5.0",
     "eslint-plugin-jest": "^23.20.0",
+    "query-string": "^6.13.6",
     "react": "16.13.1",
     "react-collapse": "^5.0.1",
     "react-dom": "16.13.1",
     "react-icons": "^3.10.0",
+    "react-router-dom": "^5.2.0",
     "react-scripts": "^3.4.3",
     "react-test-renderer": "^16.13.1",
+    "uuid": "^8.3.1",
+    "validator": "^13.1.17",
     "wait-for-expect": "^3.0.2"
   },
   "devDependencies": {
