@@ -57,7 +57,11 @@ class ItemsRoutes {
         // update
         this.router.put('/:id', async (req, res, next) => {
             try {
-                const validate = itemSchema.validate(req.body);
+                const updateSchema = Joi.object().required().keys({
+                    listId: Joi.string().guid().required(),
+                    description: Joi.string().required(),
+                });
+                const validate = updateSchema.validate(req.body);
                 if (validate.error) {
                     throw validate.error;
                 }

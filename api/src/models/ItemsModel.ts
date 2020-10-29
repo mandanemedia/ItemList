@@ -35,11 +35,12 @@ class ItemsModel {
 
     static async create(itemId :string, listId :string, description :string, order: number) {
         try {
-            // console.log(`itemId:${itemId}, listId:${listId}, description:${description}, order:${order}`);
+            console.log(`itemId:${itemId}, listId:${listId}, description:${description}, order:${order}`);
             return await item.create({
                 itemId, listId, description, order,
             });
         } catch (e) {
+            console.log(e);
             if (e.name === 'SequelizeForeignKeyConstraintError') {
                 throw new BaseError(HttpStatusCode.BAD_REQUEST);
             } else {
@@ -94,24 +95,33 @@ class ItemsModel {
                 transaction,
             });
 
-            mainItem.order = parseInt(order) + otherItems.length + 1;
+            //Temporary Order
+            mainItem.order = parseInt(order, 10) + otherItems.length + 100;
             await mainItem.save({ transaction });
-
-            let newOrder = parseInt(order) + otherItems.length;
+            let newOrder = parseInt(order, 10) + otherItems.length + 99;
             for (let i = otherItems.length - 1; i >= 0; i -= 1) {
                 const otherItem = otherItems[i];
                 otherItem.order = newOrder;
-                // console.log(`new order is :${newOrder}`);
+                // console.log(`${otherItem.description} new order is :${newOrder}`);
                 await otherItem.save({ transaction });
                 newOrder -= 1;
             }
-
+            //new Order
+            newOrder = parseInt(order, 10) + otherItems.length;
+            for (let i = otherItems.length - 1; i >= 0; i -= 1) {
+                const otherItem = otherItems[i];
+                otherItem.order = newOrder;
+                // console.log(`${otherItem.description} new order is :${newOrder}`);
+                await otherItem.save({ transaction });
+                newOrder -= 1;
+            }
             mainItem.order = order;
             await mainItem.save({ transaction });
 
             await transaction.commit();
             return mainItem;
         } catch (e) {
+            console.log(e);
             await transaction.rollback();
             if (e instanceof BaseError) {
                 throw e;

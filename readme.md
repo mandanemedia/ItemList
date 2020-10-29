@@ -54,7 +54,7 @@ cd client
 npm start
 ```
 
-# Screen Shots 
+# Screenshots 
 ![DB Schema](DBSchema_.png)
 ![Swagger](Swagger_.png)
 
