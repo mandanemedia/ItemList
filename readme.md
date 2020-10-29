@@ -58,6 +58,8 @@ npm start
 ![DB Schema](DBSchema_.png)
 ![Swagger](Swagger_.png)
 
+# UI Video 
+https://drive.google.com/file/d/1YfoMXRX32lKDngewdCXw2wDyxaZPGkem/view?usp=sharing
 
 
 # Todo
