@@ -29,7 +29,7 @@
   background-color: #eee;
   border: #eee 1px dashed; 
   width: 400px;
-  height: 60px;
+  height: 67px;
   padding: 4px 0px;
   border-radius: 5px;
   margin: 2px 0px 2px 0px;
@@ -53,20 +53,20 @@
   background: white;
   width: 30px;
   float: left;
-  margin: 5px 2px;
+  margin: 2px;
   cursor: pointer;
   border-radius: 5px;
-  height: 20px;
+  height: 26px;
 }
 .editItemButtonRight{
   border: none;
   background: white;
   width: 30px;
   float: left;
-  margin: 5px 2px;
+  margin: 2px;
   cursor: pointer;
   border-radius: 5px;
-  height: 20px;
+  height: 26px;
 }
 
 .editItemButtonRight:focus,
@@ -86,4 +86,7 @@
 .defualt{
   color: #666;
   font-size: small;
+}
+.createNewListModal {
+  margin: 10px;
 }
