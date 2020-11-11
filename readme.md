@@ -54,6 +54,12 @@ cd client
 npm start
 ```
 
+Check the storybook:
+```
+cd client
+npm run storybook
+```
+
 # Screenshots 
 ![DB Schema](DBSchema_.png)
 ![Swagger](Swagger_.png)
