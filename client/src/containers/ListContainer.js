@@ -73,7 +73,7 @@ const ListContainer = () => {
 
   const onIncreaseOrder = async (itemId, order) => {
     let newItemId;
-    const newOrder = order < list.length ? order + 1 : order;
+    const newOrder = parseInt(order, 10) < list.length ? order + 1 : order;
     for (let i = 0; i < list.length; i += 1) {
       if (list[i].order === newOrder) {
         newItemId = list[i].itemId;

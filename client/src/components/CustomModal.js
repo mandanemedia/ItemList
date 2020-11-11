@@ -3,10 +3,10 @@ import { Button, Modal } from 'react-bootstrap';
 
 const CustomModal = ({
   mainButton, disply, title, message, primaryButton, secondaryButton,
-  onPrimaryButton,
+  onPrimaryButton, onSecondaryButton,
 }: { mainButton:string,
  disply:boolean, title:string, message:string, primaryButton:string, secondaryButton:string,
-     onPrimaryButton:()=>void }) => {
+     onPrimaryButton:()=>void, onSecondaryButton:()=>void }) => {
   const [show, setShow] = useState(disply);
 
   const handlePrimaryButton = () => {
@@ -15,6 +15,7 @@ const CustomModal = ({
   };
   const handleSecondaryButton = () => {
     setShow(false);
+    onSecondaryButton();
   };
 
   const displayModal = () => {

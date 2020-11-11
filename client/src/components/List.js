@@ -1,6 +1,6 @@
 // @flow
 import React from 'react';
-import Item from './Item';
+import Item, {type ItemFunction} from './Item';
 import AddItem from './AddItem';
 
 const List = (
@@ -8,8 +8,9 @@ const List = (
     id, items, onReset, onAddItem, onRemoveItem,
     onIncreaseOrder, onDecreaseOrder, onUpdateDescription,
   }
-  : { id:string, items:Array<any>, onReset:any, onAddItem:any, onRemoveItem:any,
-    onIncreaseOrder:any, onDecreaseOrder:any, onUpdateDescription:any },
+  : { id:string, items:Array<any>, onReset:()=>void, onAddItem:()=>void, 
+    onRemoveItem: ItemFunction, onIncreaseOrder: ItemFunction,
+    onDecreaseOrder: ItemFunction, onUpdateDescription: ItemFunction},
 ) => (
   <div className="list" key={id}>
     <AddItem onAddItem={onAddItem} />

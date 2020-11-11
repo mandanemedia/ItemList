@@ -4,11 +4,14 @@ import {
   ImArrowDown, ImArrowUp, ImCross,
 } from 'react-icons/im';
 
+export type ItemFunction = (itemId:string, order:string)=>void;
+
 const Item = ({
   description, itemId, listId, order,
   onRemoveItem, onIncreaseOrder, onDecreaseOrder, onUpdateDescription,
 }: { description:string, itemId:string, listId:string, order:string,
-      onRemoveItem:any, onIncreaseOrder:any, onDecreaseOrder:any, onUpdateDescription:any }) => {
+      onRemoveItem: ItemFunction, onIncreaseOrder: ItemFunction,
+      onDecreaseOrder: ItemFunction, onUpdateDescription: ItemFunction }) => {
   const [itemText, setItemText] = useState(description);
   const [itemChanged, setitemChanged] = useState(false);
 
