@@ -2,6 +2,9 @@
 body{
   margin: 10px;
 }
+.alert{
+  margin-bottom: 0px;
+}
 .list{
   border: #ddd 1px solid;
   padding: 5px;

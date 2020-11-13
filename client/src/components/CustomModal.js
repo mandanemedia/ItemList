@@ -26,18 +26,26 @@ const CustomModal = ({
     <>
       <Button onClick={displayModal}>{mainButton}</Button>
       <Modal show={show} onHide={handleSecondaryButton} animation centered>
-        <Modal.Header closeButton>
-          <Modal.Title>{title}</Modal.Title>
-        </Modal.Header>
+        { !title ? null
+          : (
+            <Modal.Header closeButton>
+              <Modal.Title>{title}</Modal.Title>
+            </Modal.Header>
+          )}
         <Modal.Body>{message}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleSecondaryButton}>
-            {secondaryButton}
-          </Button>
-          <Button variant="primary" onClick={handlePrimaryButton}>
-            {primaryButton}
-          </Button>
-        </Modal.Footer>
+        {primaryButton || secondaryButton ? (
+          <Modal.Footer>
+            { !secondaryButton ? null : (
+              <Button variant="secondary" onClick={handleSecondaryButton}>
+                {secondaryButton}
+              </Button>
+            )}
+            <Button variant="primary" onClick={handlePrimaryButton}>
+              {primaryButton}
+            </Button>
+          </Modal.Footer>
+        )
+          : null }
       </Modal>
     </>
   );

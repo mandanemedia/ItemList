@@ -1,5 +1,5 @@
 import React from 'react';
-import CustomModal from './CustomModal';
+import CustomModal from '../components/CustomModal';
 
 export default {
   title: 'Components/CustomModal',
@@ -24,10 +24,36 @@ export const ImmediatePopUp = Template.bind({});
 ImmediatePopUp.args = {
   mainButton: 'Immediate Pop Up',
   disply: true,
-  title: 'Immediate Pop Up',
   message: 'Would you like to create a new List?',
   primaryButton: 'Yes',
   secondaryButton: 'No',
   onPrimaryButton: () => { console.log('onPrimaryButton is called.'); },
   onSecondaryButton: () => { console.log('onSecondaryButton is called.'); },
+};
+
+export const NoTitle = Template.bind({});
+NoTitle.args = {
+  mainButton: 'No Title',
+  disply: false,
+  message: 'Would you like to create a new List?',
+  primaryButton: 'Yes',
+  secondaryButton: 'No',
+  onPrimaryButton: () => { console.log('onPrimaryButton is called.'); },
+  onSecondaryButton: () => { console.log('onSecondaryButton is called.'); },
+};
+
+export const NoButtoms = Template.bind({});
+NoButtoms.args = {
+  mainButton: 'No Buttoms',
+  disply: false,
+  title: 'New List',
+  message: 'This is a message.',
+};
+
+export const OneButtoms = Template.bind({});
+OneButtoms.args = {
+  mainButton: 'One Buttoms',
+  disply: false,
+  message: 'This is a message.',
+  primaryButton: 'Okay',
 };
