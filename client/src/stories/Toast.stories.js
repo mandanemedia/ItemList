@@ -1,12 +1,21 @@
-import React from 'react';
-import CustomToast from '../components/CustomToast';
+import React, { useState, useEffect } from 'react';
+import Toast from '../components/Toast';
 
 export default {
-  title: 'Components/CustomToast',
-  component: CustomToast,
+  title: 'Components/Toast',
+  component: Toast,
 };
 
-const Template = args => (<CustomToast {...args} />);
+const Template = args => {
+  const [display, setDisplay] = useState(args.display);
+  useEffect(() => {
+    setDisplay(args.display);
+  }, [args.display]);
+  const newArgs = { ...args, display, onClose: () => setDisplay(false) };
+  return (
+    <Toast {...newArgs} />
+  );
+};
 
 export const AutoHide = Template.bind({});
 AutoHide.args = {

@@ -1,12 +1,12 @@
 import React from 'react';
-import CustomModal from '../components/CustomModal';
+import Modal from '../components/Modal';
 
 export default {
-  title: 'Components/CustomModal',
-  component: CustomModal,
+  title: 'Components/Modal',
+  component: Modal,
 };
 
-const Template = args => (<CustomModal {...args} />);
+const Template = args => (<Modal {...args} />);
 
 export const Default = Template.bind({});
 Default.args = {

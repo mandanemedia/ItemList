@@ -12,7 +12,7 @@ const AddList = async (listId) => {
     return newData;
   }
   catch (e) {
-    return Promise.reject(new Error('Error in AddList'));
+    return ({ error: `Add List Error - ${e}` });
   }
 };
 

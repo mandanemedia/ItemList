@@ -3,7 +3,7 @@ import { Button, Modal } from 'react-bootstrap';
 
 const CustomModal = ({
   mainButton, disply, title, message, primaryButton, secondaryButton,
-  onPrimaryButton, onSecondaryButton,
+  onPrimaryButton = () => {}, onSecondaryButton = () => {},
 }: { mainButton:string,
  disply:boolean, title:string, message:string, primaryButton:string, secondaryButton:string,
      onPrimaryButton:()=>void, onSecondaryButton:()=>void }) => {
