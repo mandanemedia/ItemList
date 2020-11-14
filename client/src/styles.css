@@ -2,8 +2,17 @@
 body{
   margin: 10px;
 }
+.toast{
+  background-color: none;
+  background-clip:none;
+  border:none;
+  box-shadow:none;
+}
+.toast-header{
+  border:none;
+}
 .alert{
-  margin-bottom: 0px;
+  margin: 5px;
 }
 .list{
   border: #ddd 1px solid;
