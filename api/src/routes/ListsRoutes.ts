@@ -25,7 +25,8 @@ class ItemsRoutes {
             try {
                 const { error } = idSchema.validate(req.params.id);
                 if (error) {
-                    throw error;
+                    throw new CustomError(ErrorStatus.Bad_Request,
+                        'itemId is not in the valid format', error.details[0]);
                 }
 
                 const list = await ListsModel.findOneById(req.params.id);

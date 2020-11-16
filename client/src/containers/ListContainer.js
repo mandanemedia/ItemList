@@ -4,6 +4,7 @@ import * as queryString from 'query-string';
 import validator from 'validator';
 import { v4 as uuid } from 'uuid';
 import List from '../components/List';
+import Toast from '../components/Toast';
 import GetItemsByListIdApi from '../apiWrappers/GetItemsByListIdApi';
 import AddItemsApi from '../apiWrappers/AddItemsApi';
 import RemoveItemsApi from '../apiWrappers/RemoveItemsApi';
@@ -16,35 +17,15 @@ import ResetItemsByListIdApi from '../apiWrappers/ResetItemsByListIdApi';
 const ListContainer = () => {
   const [list, setList] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [toast, setToast] = useState({
+    type: 'danger',
+    message: 'This is an alert.',
+    autohide: false,
+    display: false,
+  });
+  const onClose = () => { setToast({ ...toast, display: false }); };
 
   const parsedQueryString = queryString.parse(window.location.search);
-
-  const isExistingList = async (id) => {
-    const existingList = await GetListByIdApi(id);
-    if (existingList.error)
-    {
-      // if list does not exist, create it with the given id
-      await AddList(id);
-    }
-  };
-
-  const onAddList = () =>
-  {
-    // Create a new list with new id and redirect
-    const newListId = uuid();
-    AddList(newListId);
-    window.location = `${window.location.href.split('?')[0]}?listId=${newListId}`;
-  };
-
-  useEffect(() => {
-    if (parsedQueryString.listId && validator.isUUID(parsedQueryString.listId)) {
-      isExistingList(parsedQueryString.listId);
-    }
-    else {
-      onAddList();
-    }
-  }, [parsedQueryString.listId]);
-
   const listId = parsedQueryString.listId;
 
   const getItems = async () => {
@@ -59,6 +40,31 @@ const ListContainer = () => {
       setLoading(false);
     }
   };
+
+  const isExistingList = async (id) => {
+    console.log('GetListByIdApi is called');
+    const existingList = await GetListByIdApi(id);
+    if (existingList.error)
+    {
+      setToast({
+        autohide: false, display: true, type: 'danger', message: existingList.error.errorMessage,
+      });
+    }
+    else{
+      getItems();
+    }
+  };
+
+  useEffect(() => {
+    if (parsedQueryString.listId && validator.isUUID(parsedQueryString.listId)) {
+      isExistingList(parsedQueryString.listId);
+    }
+    else {
+      setToast({
+        autohide: false, display: true, type: 'danger', message: 'listId is not in the valid format!',
+      });
+    }
+  }, [listId]);
 
   const onAddItem = async (description) => {
     await AddItemsApi(listId, description, (list.length + 1));
@@ -110,26 +116,31 @@ const ListContainer = () => {
     getItems();
   };
 
-  useEffect(() => {
-    getItems();
-  }, [listId]);
-
   return (
     <>
       {!loading
         ? (
-          <List
-            id={listId}
-            items={list}
-            onReset={onReset}
-            onAddItem={onAddItem}
-            onRemoveItem={onRemoveItem}
-            onIncreaseOrder={onIncreaseOrder}
-            onDecreaseOrder={onDecreaseOrder}
-            onUpdateDescription={onUpdateDescription}
-          />
+          <>
+            <List
+              id={listId}
+              items={list}
+              onReset={onReset}
+              onAddItem={onAddItem}
+              onRemoveItem={onRemoveItem}
+              onIncreaseOrder={onIncreaseOrder}
+              onDecreaseOrder={onDecreaseOrder}
+              onUpdateDescription={onUpdateDescription}
+            />
+          </>
         )
         : <span>Loading List</span>}
+      <Toast
+        type={toast.type}
+        message={toast.message}
+        autohide={toast.autohide}
+        display={toast.display}
+        onClose={onClose}
+      />
       <p className="defualt">List Id with some items: 1000ef5c-1657-46b2-bb36-c74080e00a11</p>
     </>
   ); };

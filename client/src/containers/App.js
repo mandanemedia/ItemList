@@ -12,7 +12,6 @@ const App = () => {
     autohide: false,
     display: false,
   });
-
   const onClose = () => { setToast({ ...toast, display: false }); };
 
   const newList = async () => {
