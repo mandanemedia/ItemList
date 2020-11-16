@@ -1,6 +1,8 @@
 import express from 'express';
 import Joi from 'joi';
-import lists from '../controllers/Lists';
+import { HttpStatusCode } from '../models/types';
+import BaseError from '../utils/BaseError';
+import ListsModel from '../models/ListsModel';
 
 class ItemsRoutes {
     public router;
@@ -13,7 +15,7 @@ class ItemsRoutes {
         // find all
         this.router.get('/', async (req, res, next) => {
             try {
-                await lists.findAll(req, res);
+                await res.json(await ListsModel.findAll());
             } catch (err) {
                 next(err);
             }
@@ -26,7 +28,12 @@ class ItemsRoutes {
                 if (error) {
                     throw error;
                 }
-                await lists.findOneById(req, res);
+
+                const list = await ListsModel.findOneById(req.params.id);
+                if (list) {
+                    return res.json(list);
+                }
+                throw new BaseError(HttpStatusCode.NOT_FOUND);
             } catch (err) {
                 next(err);
             }
@@ -42,7 +49,9 @@ class ItemsRoutes {
                 if (validate.error) {
                     throw validate.error;
                 }
-                await lists.create(req, res);
+
+                const customer = await ListsModel.create(req.body.listId);
+                await res.json(customer);
             } catch (err) {
                 next(err);
             }
@@ -55,7 +64,12 @@ class ItemsRoutes {
                 if (error) {
                     throw error;
                 }
-                await lists.delete(req, res);
+
+                const deletedCount = await ListsModel.delete(req.params.id);
+                if (deletedCount === 1) {
+                    await res.json({ id: req.params.id });
+                }
+                throw new BaseError(HttpStatusCode.NOT_FOUND);
             } catch (err) {
                 next(err);
             }

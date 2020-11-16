@@ -1,6 +1,9 @@
 import express from 'express';
 import Joi from 'joi';
-import items from '../controllers/Items';
+import { v4 as uuid } from 'uuid';
+import { HttpStatusCode } from '../models/types';
+import BaseError from '../utils/BaseError';
+import ItemsModel from '../models/ItemsModel';
 
 class ItemsRoutes {
     public router;
@@ -22,7 +25,8 @@ class ItemsRoutes {
                 if (error) {
                     throw error;
                 }
-                await items.findAll(req, res);
+                const { listId } = req.query;
+                await res.json(await ItemsModel.findAll(listId));
             } catch (err) {
                 next(err);
             }
@@ -35,7 +39,12 @@ class ItemsRoutes {
                 if (error) {
                     throw error;
                 }
-                await items.findOneById(req, res);
+                const { id } = req.params;
+                const item = await ItemsModel.findOneById(id);
+                if (item) {
+                    await res.json(item);
+                }
+                throw new BaseError(HttpStatusCode.NOT_FOUND);
             } catch (err) {
                 next(err);
             }
@@ -48,7 +57,10 @@ class ItemsRoutes {
                 if (error) {
                     throw error;
                 }
-                await items.create(req, res);
+                const { listId, description, order } = req.body;
+                const itemId = uuid();
+                const customer = await ItemsModel.create(itemId, listId, description, order);
+                await res.json(customer);
             } catch (err) {
                 next(err);
             }
@@ -69,7 +81,16 @@ class ItemsRoutes {
                 if (idValidate.error) {
                     throw idValidate.error;
                 }
-                await items.update(req, res);
+                const { listId, description } = req.body;
+                const itemId = req.params.id;
+                const updatedCount = await ItemsModel.update(itemId, listId, description);
+                if (updatedCount[0] === 1) {
+                    await res.json({
+                        itemId, listId, description,
+                    });
+                }
+                // TODO need to handle cannot update the record
+                throw new BaseError(HttpStatusCode.BAD_REQUEST);
             } catch (err) {
                 next(err);
             }
@@ -86,7 +107,12 @@ class ItemsRoutes {
                 if (idValidate.error) {
                     throw idValidate.error;
                 }
-                await items.updateOrder(req, res);
+
+                const { id, order } = req.params;
+                await ItemsModel.updateOrder(id, order);
+                await res.json({
+                    id, order,
+                });
             } catch (err) {
                 next(err);
             }
@@ -99,7 +125,12 @@ class ItemsRoutes {
                 if (error) {
                     throw error;
                 }
-                await items.delete(req, res);
+                const { id } = req.params;
+                const deletedCount = await ItemsModel.delete(id);
+                if (deletedCount === 1) {
+                    await res.json({ id });
+                }
+                throw new BaseError(HttpStatusCode.NOT_FOUND);
             } catch (err) {
                 next(err);
             }
@@ -112,7 +143,9 @@ class ItemsRoutes {
                 if (error) {
                     throw error;
                 }
-                await items.deleteByListId(req, res);
+                const { id } = req.params;
+                await ItemsModel.deleteByListId(id);
+                await res.json({ id });
             } catch (err) {
                 next(err);
             }
