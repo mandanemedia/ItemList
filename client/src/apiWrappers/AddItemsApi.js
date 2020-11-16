@@ -11,7 +11,7 @@ const AddItemsApi = async (listId:string, description:string, order:number) => {
     return newData;
   }
   catch (e) {
-    return Promise.reject(new Error('Error in AddItemsApi'));
+    return ({ error: `Add Items Error - ${e}` });
   }
 };
 
