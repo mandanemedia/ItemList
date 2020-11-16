@@ -22,7 +22,8 @@ class ItemsRoutes {
             try {
                 const { error } = Joi.string().guid().validate(req.query.listId);
                 if (error) {
-                    throw error;
+                    throw new CustomError(ErrorStatus.Bad_Request,
+                        'listId is not in the valid format', error.details[0]);
                 }
                 const { listId } = req.query;
                 await res.json(await ItemsModel.findAll(listId));
@@ -36,7 +37,8 @@ class ItemsRoutes {
             try {
                 const { error } = idSchema.validate(req.params.id);
                 if (error) {
-                    throw error;
+                    throw new CustomError(ErrorStatus.Bad_Request,
+                        'itemId is not in the valid format', error.details[0]);
                 }
                 const { id } = req.params;
                 const item = await ItemsModel.findOneById(id);
@@ -54,7 +56,7 @@ class ItemsRoutes {
             try {
                 const { error } = itemSchema.validate(req.body);
                 if (error) {
-                    throw error;
+                    throw new CustomError(ErrorStatus.Bad_Request, 'Request is not valid', error.details[0]);
                 }
                 const { listId, description, order } = req.body;
                 const itemId = uuid();

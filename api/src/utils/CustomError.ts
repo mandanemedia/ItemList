@@ -11,7 +11,7 @@ export enum ErrorStatus {
 }
 
 class CustomError extends Error {
-    constructor(status: ErrorStatus, errorMessage: string = '') {
+    constructor(status: ErrorStatus, errorMessage: string = '', details:Object = {}) {
         switch (status) {
         case ErrorStatus.Bad_Request: {
             super('Bad Request');
@@ -58,6 +58,9 @@ class CustomError extends Error {
         Object.setPrototypeOf(this, new.target.prototype);
         this.type = this.message;
         this.errorMessage = errorMessage;
+        if (Object.keys(details).length !== 0) {
+            this.details = details;
+        }
         this.timestamp = moment().format();
         Error.captureStackTrace(this, this.constructor);
     }

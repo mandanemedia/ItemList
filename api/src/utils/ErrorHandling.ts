@@ -19,7 +19,7 @@ const ErrorHandling = (err, req, res, next) => {
 
     if (err instanceof CustomError) {
         res.status(err.status).send({ error: errorResponse });
-    } else if (err.statusCode) { // joi error
+    } else if (err.statusCode) { // sequelize error
         res.status(err.status).send({ error: err });
     } else {
         res.status(500).send({ error: err });

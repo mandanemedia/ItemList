@@ -42,6 +42,9 @@ class ItemsModel {
             if (e.name === 'SequelizeForeignKeyConstraintError') {
                 throw new CustomError(ErrorStatus.Bad_Request,
                     'This is not a valid request because of itemId, order or listId');
+            } else if (e.name === 'SequelizeUniqueConstraintError') {
+                throw new CustomError(ErrorStatus.Conflict,
+                    'This is conflict in the request because of itemId, order or listId');
             } else {
                 throw e;
             }
@@ -62,6 +65,9 @@ class ItemsModel {
             if (e.name === 'SequelizeForeignKeyConstraintError') {
                 throw new CustomError(ErrorStatus.Bad_Request,
                     'This is not a valid request because of itemId or listId');
+            } else if (e.name === 'SequelizeUniqueConstraintError') {
+                throw new CustomError(ErrorStatus.Conflict,
+                    'This is conflict in the request because of itemId, order or listId');
             } else {
                 throw e;
             }
