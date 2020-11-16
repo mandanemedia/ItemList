@@ -1,7 +1,6 @@
 import express from 'express';
 import Joi from 'joi';
-import { HttpStatusCode } from '../models/types';
-import BaseError from '../utils/BaseError';
+import CustomError, { ErrorStatus } from '../utils/CustomError';
 import ListsModel from '../models/ListsModel';
 
 class ItemsRoutes {
@@ -33,7 +32,7 @@ class ItemsRoutes {
                 if (list) {
                     return res.json(list);
                 }
-                throw new BaseError(HttpStatusCode.NOT_FOUND);
+                throw new CustomError(ErrorStatus.Not_Found, 'List Id is not valid!');
             } catch (err) {
                 next(err);
             }
@@ -69,7 +68,7 @@ class ItemsRoutes {
                 if (deletedCount === 1) {
                     await res.json({ id: req.params.id });
                 }
-                throw new BaseError(HttpStatusCode.NOT_FOUND);
+                throw new CustomError(ErrorStatus.Not_Found, 'List Id is not valid!');
             } catch (err) {
                 next(err);
             }

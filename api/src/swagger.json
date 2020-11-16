@@ -422,7 +422,14 @@
                         }
                     },
                     "404": {
-                        "description": "Failed. Not found."
+                        "description": "Failed. Not found.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ListNotFound"
+                                }
+                            }
+                        }
                     }
                 }
             },
@@ -533,6 +540,40 @@
                 "items": {
                     "$ref":  "#/components/schemas/ListFull"
                 }
+            },
+            "ListNotFound": {
+                "type": "object",
+                "properties": {
+                    "error": {
+                        "type": "object",
+                        "properties": {
+                            "status": {
+                                "type": "number"
+                            },
+                            "type": {
+                                "type": "string"
+                            },
+                            "errorMessage": {
+                                "type": "string"
+                            },
+                            "timestamp": {
+                                "type": "string"
+                            },
+                            "instance": {
+                                "type": "string"
+                            }
+                        }
+                    }
+                },
+                "example": {
+                    "error": {
+                      "status": 404,
+                      "type": "Not Found",
+                      "errorMessage": "List Id is not valid!",
+                      "timestamp": "2020-11-15T20:44:40-08:00",
+                      "instance": "localhost:9000/lists/29ccdff9-4ae5-46d9-a613-ca14c80558fc"
+                    }
+                  }
             }
         }
     }

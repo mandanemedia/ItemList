@@ -1,5 +1,4 @@
-import BaseError from '../utils/BaseError';
-import { HttpStatusCode } from './types';
+import CustomError, { ErrorStatus } from '../utils/CustomError';
 import { list } from './dbModels';
 
 class ListsModel {
@@ -20,9 +19,9 @@ class ListsModel {
             return await list.create({ listId });
         } catch (e) {
             if (e.name === 'SequelizeForeignKeyConstraintError') {
-                throw new BaseError(HttpStatusCode.BAD_REQUEST);
+                throw new CustomError(ErrorStatus.Bad_Request, 'List Id is not Valid');
             } else {
-                throw new BaseError(HttpStatusCode.INTERNAL_SERVER);
+                throw e;
             }
         }
     }
@@ -36,9 +35,9 @@ class ListsModel {
             });
         } catch (e) {
             if (e.name === 'SequelizeForeignKeyConstraintError') {
-                throw new BaseError(HttpStatusCode.CONFLICT);
+                throw new CustomError(ErrorStatus.Bad_Request, 'List Id is not Valid');
             } else {
-                throw new BaseError(HttpStatusCode.INTERNAL_SERVER);
+                throw e;
             }
         }
     }

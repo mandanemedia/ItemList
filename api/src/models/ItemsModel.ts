@@ -1,6 +1,5 @@
 import { Op } from 'sequelize';
-import BaseError from '../utils/BaseError';
-import { HttpStatusCode } from './types';
+import CustomError, { ErrorStatus } from '../utils/CustomError';
 import { item, list } from './dbModels';
 import { sequelize } from '../config/db';
 
@@ -35,16 +34,16 @@ class ItemsModel {
 
     static async create(itemId :string, listId :string, description :string, order: number) {
         try {
-            console.log(`itemId:${itemId}, listId:${listId}, description:${description}, order:${order}`);
+            // console.log(`itemId:${itemId}, listId:${listId}, description:${description}, order:${order}`);
             return await item.create({
                 itemId, listId, description, order,
             });
         } catch (e) {
-            console.log(e);
             if (e.name === 'SequelizeForeignKeyConstraintError') {
-                throw new BaseError(HttpStatusCode.BAD_REQUEST);
+                throw new CustomError(ErrorStatus.Bad_Request,
+                    'This is not a valid request because of itemId, order or listId');
             } else {
-                throw new BaseError(HttpStatusCode.INTERNAL_SERVER);
+                throw e;
             }
         }
     }
@@ -61,9 +60,10 @@ class ItemsModel {
             );
         } catch (e) {
             if (e.name === 'SequelizeForeignKeyConstraintError') {
-                throw new BaseError(HttpStatusCode.CONFLICT);
+                throw new CustomError(ErrorStatus.Bad_Request,
+                    'This is not a valid request because of itemId or listId');
             } else {
-                throw new BaseError(HttpStatusCode.INTERNAL_SERVER);
+                throw e;
             }
         }
     }
@@ -95,7 +95,7 @@ class ItemsModel {
                 transaction,
             });
 
-            //Temporary Order
+            // Temporary Order
             mainItem.order = parseInt(order, 10) + otherItems.length + 100;
             await mainItem.save({ transaction });
             let newOrder = parseInt(order, 10) + otherItems.length + 99;
@@ -106,7 +106,7 @@ class ItemsModel {
                 await otherItem.save({ transaction });
                 newOrder -= 1;
             }
-            //new Order
+            // new Order
             newOrder = parseInt(order, 10) + otherItems.length;
             for (let i = otherItems.length - 1; i >= 0; i -= 1) {
                 const otherItem = otherItems[i];
@@ -121,13 +121,8 @@ class ItemsModel {
             await transaction.commit();
             return mainItem;
         } catch (e) {
-            console.log(e);
             await transaction.rollback();
-            if (e instanceof BaseError) {
-                throw e;
-            } else {
-                throw new BaseError(HttpStatusCode.INTERNAL_SERVER);
-            }
+            throw e;
         }
     }
 
@@ -140,9 +135,10 @@ class ItemsModel {
             });
         } catch (e) {
             if (e.name === 'SequelizeForeignKeyConstraintError') {
-                throw new BaseError(HttpStatusCode.CONFLICT);
+                throw new CustomError(ErrorStatus.Bad_Request,
+                    'This is not a valid request because of itemId, order or listId');
             } else {
-                throw new BaseError(HttpStatusCode.INTERNAL_SERVER);
+                throw e;
             }
         }
     }
@@ -156,9 +152,10 @@ class ItemsModel {
             });
         } catch (e) {
             if (e.name === 'SequelizeForeignKeyConstraintError') {
-                throw new BaseError(HttpStatusCode.CONFLICT);
+                throw new CustomError(ErrorStatus.Bad_Request,
+                    'This is not a valid request because of itemId, order or listId');
             } else {
-                throw new BaseError(HttpStatusCode.INTERNAL_SERVER);
+                throw e;
             }
         }
     }

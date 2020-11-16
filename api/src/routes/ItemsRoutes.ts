@@ -1,8 +1,7 @@
 import express from 'express';
 import Joi from 'joi';
 import { v4 as uuid } from 'uuid';
-import { HttpStatusCode } from '../models/types';
-import BaseError from '../utils/BaseError';
+import CustomError, { ErrorStatus } from '../utils/CustomError';
 import ItemsModel from '../models/ItemsModel';
 
 class ItemsRoutes {
@@ -44,7 +43,7 @@ class ItemsRoutes {
                 if (item) {
                     await res.json(item);
                 }
-                throw new BaseError(HttpStatusCode.NOT_FOUND);
+                throw new CustomError(ErrorStatus.Not_Found, 'Item Id is not valid!');
             } catch (err) {
                 next(err);
             }
@@ -89,8 +88,7 @@ class ItemsRoutes {
                         itemId, listId, description,
                     });
                 }
-                // TODO need to handle cannot update the record
-                throw new BaseError(HttpStatusCode.BAD_REQUEST);
+                throw new CustomError(ErrorStatus.Not_Found, 'Item Id is not valid!');
             } catch (err) {
                 next(err);
             }
@@ -130,7 +128,7 @@ class ItemsRoutes {
                 if (deletedCount === 1) {
                     await res.json({ id });
                 }
-                throw new BaseError(HttpStatusCode.NOT_FOUND);
+                throw new CustomError(ErrorStatus.Not_Found, 'Item Id is not valid!');
             } catch (err) {
                 next(err);
             }
