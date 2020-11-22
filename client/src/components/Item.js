@@ -15,6 +15,9 @@ const Item = ({
   const [itemText, setItemText] = useState(description);
   const [itemChanged, setitemChanged] = useState(false);
 
+  if (parseInt(order, 10) < 1) {
+    throw new Error('Order should be positive!');
+  }
   const removeItem = () => {
     onRemoveItem(itemId, order);
   };

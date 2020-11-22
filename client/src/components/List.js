@@ -1,6 +1,7 @@
 // @flow
 import React from 'react';
 import Item, {type ItemFunction} from './Item';
+import ErrorBoundary from '../components/ErrorBoundary';
 import AddItem from './AddItem';
 
 const List = (
@@ -19,17 +20,19 @@ const List = (
         items.map(({
           description, itemId, listId, order,
         }) => (
-          <Item
-            key={itemId}
-            description={description}
-            itemId={itemId}
-            listId={listId}
-            order={order}
-            onRemoveItem={onRemoveItem}
-            onIncreaseOrder={onIncreaseOrder}
-            onDecreaseOrder={onDecreaseOrder}
-            onUpdateDescription={onUpdateDescription}
-          />
+          <ErrorBoundary>
+            <Item
+              key={itemId}
+              description={description}
+              itemId={itemId}
+              listId={listId}
+              order={order}
+              onRemoveItem={onRemoveItem}
+              onIncreaseOrder={onIncreaseOrder}
+              onDecreaseOrder={onDecreaseOrder}
+              onUpdateDescription={onUpdateDescription}
+            />
+          </ErrorBoundary>
         ))
     }
     </div>

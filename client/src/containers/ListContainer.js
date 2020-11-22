@@ -10,7 +10,6 @@ import AddItemsApi from '../apiWrappers/AddItemsApi';
 import RemoveItemsApi from '../apiWrappers/RemoveItemsApi';
 import UpdateItemsOrderApi from '../apiWrappers/UpdateItemsOrderApi';
 import UpdateItemsDescriptionApi from '../apiWrappers/UpdateItemsDescriptionApi';
-import AddList from '../apiWrappers/AddList';
 import GetListByIdApi from '../apiWrappers/GetListByIdApi';
 import ResetItemsByListIdApi from '../apiWrappers/ResetItemsByListIdApi';
 
@@ -42,7 +41,6 @@ const ListContainer = () => {
   };
 
   const isExistingList = async (id) => {
-    console.log('GetListByIdApi is called');
     const existingList = await GetListByIdApi(id);
     if (existingList.error)
     {
@@ -50,7 +48,7 @@ const ListContainer = () => {
         autohide: false, display: true, type: 'danger', message: existingList.error.errorMessage,
       });
     }
-    else{
+    else {
       getItems();
     }
   };
