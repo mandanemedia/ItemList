@@ -19,4 +19,4 @@ const options = {
     freezeTableName: true,
     operatorsAliases: 0,
 };
-export const sequelize = new Sequelize(dbSettings.database, dbSettings.user, dbSettings.password, options);
+export const sequelize = new Sequelize(dbSettings.database, dbSettings.user, dbSettings.password, options as any);

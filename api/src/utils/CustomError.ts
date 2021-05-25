@@ -11,6 +11,16 @@ export enum ErrorStatus {
 }
 
 class CustomError extends Error {
+    status: ErrorStatus;
+
+    errorMessage: string;
+
+    type: string;
+
+    details: Object;
+
+    timestamp: string;
+
     constructor(status: ErrorStatus, errorMessage: string = '', details:Object = {}) {
         switch (status) {
         case ErrorStatus.Bad_Request: {

@@ -2,7 +2,6 @@
 import React, { useEffect, useState } from 'react';
 import * as queryString from 'query-string';
 import validator from 'validator';
-import { v4 as uuid } from 'uuid';
 import List from '../components/List';
 import Toast from '../components/Toast';
 import GetItemsByListIdApi from '../apiWrappers/GetItemsByListIdApi';
