@@ -46,7 +46,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/mandanemedia/SimpleOrderService"
+    "url": "https://github.com/mandanemedia/ItemList"
   },
   "jest": {
     "testMatch": [

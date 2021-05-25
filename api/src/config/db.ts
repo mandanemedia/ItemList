@@ -1,9 +1,9 @@
 import { Sequelize } from 'sequelize';
 
 const dbSettings = {
-    database: process.env.DB || 'itemlist',
+    database: process.env.DB || 'postgres',
     user: process.env.DB_USER || 'postgres',
-    password: process.env.DB_PASS || '',
+    password: process.env.DB_PASS || 'password',
     server: process.env.DB_SERVER || 'localhost',
 };
 

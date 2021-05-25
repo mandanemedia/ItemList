@@ -1,5 +1,37 @@
 # Setup Express and React to fetch data from Giphy
 
+## Development
+
+## Prerequisites
+The following table lists _hard_ dependencies you will need to use this project.
+
+| Name                                                                                       | Version      | Notes                                        |
+|--------------------------------------------------------------------------------------------|--------------|----------------------------------------------|
+| [docker](https://www.docker.com/products/docker-desktop)                                   | 18.02.0+     | Required to build and spin up services       |
+| [docker-compose](https://docs.docker.com/compose/install/)                                 | 1.20.0+      | Required to build and spin up services       |
+| [Node](https://nodejs.org/en/download/)                                                    | 14.16        | Required if running locally or running tests |
+| [yarn](https://yarnpkg.com/)                                                               | 1.22.5       | Required if running locally or running tests |
+
+### Useful commands
+
+| Command         | Description                                                                                   |
+| ----------------| ----------------------------------------------------------------------------------------------|
+| start           | Starts the postgres                                                                           |
+| stop            | Stops running containers for either `make start` or `make watch`                              |
+| watch           | Builds, starts, and watches for changes in the service                                        |     
+
+### Migration Script
+
+Migration Script runs through docker compose by `make start` or `make watch`, 
+more info to [run migrations](https://github.com/golang-migrate/migrate/blob/master/database/postgres/TUTORIAL.md).
+
+Install migration script manually on Macbook:
+```
+brew install golang-migrate
+migrate create -ext sql -dir api/db/migrations -seq create_list_table
+migrate create -ext sql -dir api/db/migrations -seq create_item_table
+```
+
 ## Assumptions 
 
 - If list does not exist, create new list with a prompt that new list is created
@@ -17,25 +49,15 @@
 - List has id 
 - Item has description, order and id
 
-# Install and start postgress
-```
-brew install postgresql
-brew services start postgresql
-```
-Set user name and DB name for Postgress on config/db.ts
-
-```
-postgres=# \du
-```
-Then, create a database and import itemlist.sql into the new database.
-
 ## Install packages
 
+For backend:
 ```
 cd api
 npm install
 ```
 
+for frontend:
 ```
 cd client
 npm install
@@ -43,12 +65,19 @@ npm install
 
 ## Run
 
+To run postgres and migration script in the first terminal tab:
+```
+make watch
+```
+
+to run the backend in the second terminal tab:
 ```
 cd api
 npm run dev
 ```
 Then visit http://localhost:9000/swagger/#/ and http://localhost:3000/
 
+To run the frontend in the third terminal tab:
 ```
 cd client
 npm start
@@ -58,6 +87,13 @@ Check the storybook:
 ```
 cd client
 npm run storybook
+```
+
+
+## End-to-end test for back-end:
+```
+cd end-to-end-tests
+yarn test
 ```
 
 # Screenshots 
