@@ -77,7 +77,7 @@ class ItemsModel {
     static async updateOrder(itemId :string, order: number) {
         const transaction = await sequelize.transaction();
         try {
-            const mainItem = await item.findOne({
+            const mainItem:any = await item.findOne({
                 where: {
                     itemId,
                 },
@@ -102,20 +102,20 @@ class ItemsModel {
             });
 
             // Temporary Order
-            mainItem.order = parseInt(order, 10) + otherItems.length + 100;
+            mainItem.order = parseInt(String(order), 10) + otherItems.length + 100;
             await mainItem.save({ transaction });
-            let newOrder = parseInt(order, 10) + otherItems.length + 99;
+            let newOrder = parseInt(String(order), 10) + otherItems.length + 99;
             for (let i = otherItems.length - 1; i >= 0; i -= 1) {
-                const otherItem = otherItems[i];
+                const otherItem:any = otherItems[i];
                 otherItem.order = newOrder;
                 // console.log(`${otherItem.description} new order is :${newOrder}`);
                 await otherItem.save({ transaction });
                 newOrder -= 1;
             }
             // new Order
-            newOrder = parseInt(order, 10) + otherItems.length;
+            newOrder = parseInt(String(order), 10) + otherItems.length;
             for (let i = otherItems.length - 1; i >= 0; i -= 1) {
-                const otherItem = otherItems[i];
+                const otherItem:any = otherItems[i];
                 otherItem.order = newOrder;
                 // console.log(`${otherItem.description} new order is :${newOrder}`);
                 await otherItem.save({ transaction });
