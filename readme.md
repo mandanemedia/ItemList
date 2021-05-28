@@ -16,13 +16,12 @@ The following table lists _hard_ dependencies you will need to use this project.
 
 | Command         | Description                                                                                   |
 | ----------------| ----------------------------------------------------------------------------------------------|
-| start           | Starts the postgres                                                                           |
-| stop            | Stops running containers for either `make start` or `make watch`                              |
+| stop            | Stops running containers for either `make watch`                                              |
 | watch           | Builds, starts, and watches for changes in the service                                        |     
 
 ### Migration Script
 
-Migration Script runs through docker compose by `make start` or `make watch`, 
+Migration Script runs through docker compose by `make start`, 
 more info to [run migrations](https://github.com/golang-migrate/migrate/blob/master/database/postgres/TUTORIAL.md).
 
 Install migration script manually on Macbook:
@@ -65,25 +64,20 @@ npm install
 
 ## Run
 
-To run postgres and migration script in the first terminal tab:
+To run postgres, migration script and backend api in watch mode
 ```
 make watch
 ```
 
-to run the backend in the second terminal tab:
-```
-cd api
-npm run dev
-```
-Then visit http://localhost:9000/swagger/#/ and http://localhost:3000/
-
-To run the frontend in the third terminal tab:
+To run the frontend in the third second tab:
 ```
 cd client
 npm start
 ```
 
-Check the storybook:
+Then visit http://localhost:9000/swagger/#/ and http://localhost:3000/
+
+Check the storybook of existing components:
 ```
 cd client
 npm run storybook
