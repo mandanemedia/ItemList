@@ -9,13 +9,18 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
+      PORT: '9000'
       POSTGRES_DSN: 'postgresql://postgres/postgres?sslmode=disable&user=postgres&password=password'
+      POSTGRES_HOST: 'postgres'
       POSTGRES_MAX_OPEN_CONNECTIONS: 10
       POSTGRES_MAX_IDLE_CONNECTIONS: 10
       POSTGRES_CONN_MAX_LIFE_TIME: 3600
     mem_limit: 512m
     ports:
-      - '4000:4000'
+      - '8000:9000'
+    volumes:
+      # /api/src in the repo to /app/src in the docker
+      - ./api/src:/app/src
     depends_on:
       postgres:
         condition: service_started
