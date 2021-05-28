@@ -64,15 +64,9 @@ npm install
 
 ## Run
 
-To run postgres, migration script and backend api in watch mode
+To run postgres, migration script, backend api, frontend in watch mode
 ```
 make watch
-```
-
-To run the frontend in the third second tab:
-```
-cd client
-npm start
 ```
 
 Then visit http://localhost:9000/swagger/#/ and http://localhost:3000/

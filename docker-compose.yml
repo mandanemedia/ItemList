@@ -1,10 +1,34 @@
 version: "2.3"
 networks:
   default:
-    name: itemList-dev
+    name: item-list-network
+
 services:
-  itemlist:
-    image: ${AM_IMAGE:-item-list-dev}
+  item-list-client:
+    image: ${IMAGE:-item-list-client}
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    mem_limit: 512m
+    ports:
+      - '3000:3000'
+    # Important for react to run https://github.com/facebook/create-react-app/issues/8688
+    stdin_open: true
+    volumes:
+      - ./client/src:/app/src
+      - ./client/public:/app/public
+      - ./client/.storybook:/app/.storybook
+    depends_on:
+      postgres:
+        condition: service_started
+      item-list-api:
+        condition: service_started
+    # create an alias that the frontend service can communicate with the backend
+    links:
+      - 'item-list-api'
+
+  item-list-api:
+    image: ${IMAGE:-item-list-api}
     build:
       context: ./api
       dockerfile: Dockerfile
