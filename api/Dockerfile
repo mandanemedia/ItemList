@@ -8,8 +8,8 @@ RUN apk add bash
 
 # migrations
 RUN mkdir -p ./db
-COPY ./api/db /db
-COPY ./entrypoint.sh /
+COPY db /db
+COPY entrypoint.sh /
 COPY --from=migrate_image /usr/local/bin/migrate /migrate
 
 # set persmision
@@ -19,11 +19,11 @@ RUN chmod +x /entrypoint.sh
 # copy backend and install the packages
 WORKDIR /app
 RUN mkdir -p src
-COPY ["./api/package.json", "./api/package-lock.json", "./api/tsconfig.json",  "./"]
+COPY ./package.json ./package-lock.json ./tsconfig.json  ./
 RUN npm install
 
 # copy the main backend code and export typescript into js
-COPY ["./api/src", "./src"]
+COPY ./src ./src
 RUN npm run build
 
 CMD ["/entrypoint.sh"]

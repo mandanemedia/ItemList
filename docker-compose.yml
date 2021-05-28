@@ -6,7 +6,7 @@ services:
   itemlist:
     image: ${AM_IMAGE:-item-list-dev}
     build:
-      context: .
+      context: ./api
       dockerfile: Dockerfile
     environment:
       PORT: '9000'
